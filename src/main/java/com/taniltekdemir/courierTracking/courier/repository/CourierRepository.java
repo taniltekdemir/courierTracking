@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface CourierRepository extends JpaRepository<Courier, Long> {
 
     Courier findFirstByIdAndIsDeleted(Long id, boolean isDeleted);
+    Courier findFirstByLicensePlateAndIsDeleted(String plate, boolean isDeleted);
 }
