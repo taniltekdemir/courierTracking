@@ -10,6 +10,7 @@ import com.taniltekdemir.courierTracking.store.repository.StoreEntryRepository;
 import com.taniltekdemir.courierTracking.store.service.StoreEntryEntityService;
 import com.taniltekdemir.courierTracking.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class LocationEvaluation {
 
 
     @Transactional
+    @EventListener
     public void evaluater(CourierLocationDto dto) {
 /**
  *  lokasyon datasını kaydet
@@ -55,7 +57,7 @@ public class LocationEvaluation {
         Map<String,String> responseForStoreEnty = IsExistNearStore(dto);
         if(Boolean.parseBoolean(responseForStoreEnty.get("Result"))){  /**Bu bir mağaza girişi*/
             var activeTrip = IsExistActiveTrip(dto);
-            if((Boolean) activeTrip.get("Result")){  /**Daha önce başlatılmış active bir trip i var.*/
+            if(Boolean.parseBoolean((String) activeTrip.get("Result"))){  /**Daha önce başlatılmış active bir trip i var.*/
                 StoreEntry activeTripEntry =(StoreEntry) activeTrip.get("lastActiveTrip");
                 if (entryTimeNotEnough(dto.getTimeStamp(),activeTripEntry)) {
                     return;
@@ -66,9 +68,6 @@ public class LocationEvaluation {
             }else {
                 createStoreEntry(Long.parseLong(responseForStoreEnty.get("StoreId")), dto);  /**Create active new trip*/
             }
-        } else {
-                /**Bu bir mağaza girişi değil değerlendirmeye gerek yok.**/
-            return;
         }
     }
 
@@ -93,7 +92,7 @@ public class LocationEvaluation {
         Map<String,Object> response = new HashMap<>();
         StoreEntry lastStoreEntry = storeEntryRepository.findTopByCourierIdOrderByTimestampDesc(dto.getCourierId());
         if (lastStoreEntry != null && lastStoreEntry.getTripStatus() == TripStatus.ACTIVE) {
-            response.put("Result",true);
+            response.put("Result","true");
             response.put("lastActiveTrip",lastStoreEntry);
         } else {
             response.put("Result","false");
@@ -105,7 +104,7 @@ public class LocationEvaluation {
         Map<String,String> response = new HashMap<>();
         var nearestStoreList = getClosestStoreToTheLocation(dto.getLongitude(), dto.getLatitude());
         if (nearestStoreList.size() > 0){
-            response.put("StoreId",nearestStoreList.get(0).toString());
+            response.put("StoreId",nearestStoreList.get(0).getId().toString());
             response.put("Result","true");
             return response;
         } else {

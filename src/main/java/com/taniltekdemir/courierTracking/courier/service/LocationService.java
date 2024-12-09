@@ -57,7 +57,7 @@ public class LocationService {
         courierLocationDto.setLatitude(locationDto.getLatitude());
         courierLocationDto.setTimeStamp(locationDto.getTimeStamp());
 
-//        applicationEventPublisher.publishEvent(courierLocationDto);
+        applicationEventPublisher.publishEvent(courierLocationDto);
     }
     public double calculateTripDistance(Long courierId, LocalDateTime startTripTime, LocalDateTime endTripTime) {
 

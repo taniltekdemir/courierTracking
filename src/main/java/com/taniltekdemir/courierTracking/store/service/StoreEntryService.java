@@ -22,7 +22,7 @@ public class StoreEntryService {
     StoreEntryRepository storeEntryRepository;
 
     public Double getTotalTripDistanceByCourierId(Long courierId, LocalDateTime startdate, LocalDateTime endDate) {
-        var responseList = storeEntryRepository.findAllByTripStatusAndCourierIdAndTimestampBetween(TripStatus.ACTIVE, courierId, startdate, endDate);
+        var responseList = storeEntryRepository.findAllByTripStatusAndCourierIdAndTimestampBetween(TripStatus.COMPLETED, courierId, startdate, endDate);
 
         return responseList.stream()
                 .map(StoreEntry::getTripDistance)
