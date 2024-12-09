@@ -108,7 +108,7 @@ public class CourierController {
             locationService.insertLocation(locationDto);
             System.out.println("Sending location #" + i + ": " + locationDto);
 
-            Thread.sleep(4000);
+            Thread.sleep(61000);
         }
     }
 }
