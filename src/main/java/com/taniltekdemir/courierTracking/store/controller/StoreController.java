@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-@Tag(description = "/seats", name = "Seat API")
+@Tag(description = "/stores", name = "Store API")
 @RestController
 @RequestMapping(path = "api/v1/stores")
 public class StoreController {

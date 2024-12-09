@@ -5,6 +5,7 @@ import com.taniltekdemir.courierTracking.common.exception.ResourceNotFoundExcept
 import com.taniltekdemir.courierTracking.courier.dto.CourierDto;
 import com.taniltekdemir.courierTracking.courier.dto.CourierLocationDto;
 import com.taniltekdemir.courierTracking.courier.dto.LocationDto;
+import com.taniltekdemir.courierTracking.courier.entity.Courier;
 import com.taniltekdemir.courierTracking.courier.entity.Location;
 import com.taniltekdemir.courierTracking.courier.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,24 +38,26 @@ public class LocationService {
 
     @Transactional
     public void insertLocation(LocationDto locationDto) {
-        CourierDto courierDto = courierService.findByLicensePlate(locationDto.getLicensePlate());
+        Courier courier = courierService.findByLicensePlate(locationDto.getLicensePlate());
 
-        if(courierDto == null) {
-            String message = String.format("Curier with plate {} not found", locationDto.getLicensePlate());
+        if(courier == null) {
+            String message = String.format("Courier with plate {} not found", locationDto.getLicensePlate());
             throw new ResourceNotFoundException(message);
         }
-        Location locationEntity = modelMapper.map(locationDto, Location.class);
-
+        Location locationEntity = new Location();
+        locationEntity.setLatitude(locationDto.getLatitude());
+        locationEntity.setLongitude(locationDto.getLongitude());
+        locationEntity.setTimestamp(locationDto.getTimeStamp());
+        locationEntity.setCourier(courier);
         locationEntityService.save(locationEntity);
 
         CourierLocationDto courierLocationDto = new CourierLocationDto();
-
-        courierLocationDto.setCourierId(courierDto.getId());
+        courierLocationDto.setCourierId(courier.getId());
         courierLocationDto.setLongitude(locationDto.getLongitude());
         courierLocationDto.setLatitude(locationDto.getLatitude());
         courierLocationDto.setTimeStamp(locationDto.getTimeStamp());
 
-        applicationEventPublisher.publishEvent(courierLocationDto);
+//        applicationEventPublisher.publishEvent(courierLocationDto);
     }
     public double calculateTripDistance(Long courierId, LocalDateTime startTripTime, LocalDateTime endTripTime) {
 

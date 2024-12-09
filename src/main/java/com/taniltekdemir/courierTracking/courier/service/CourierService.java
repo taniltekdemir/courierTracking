@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.net.URI;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,19 +39,23 @@ public class CourierService {
 
         Courier exitstCourier = courierRepository.findFirstByIdAndIsDeleted(courierDto.getId(), false);
         if (exitstCourier == null) {
-            String message = String.format("Curier with id {} not found", courierDto.getId().toString());
+            String message = String.format("Courier with id {} not found", courierDto.getId().toString());
             throw new ResourceNotFoundException(message);
         }
-        exitstCourier.setName(courierDto.getFirstName());
-        exitstCourier.setSurname(courierDto.getLastName());
+        exitstCourier.setName(courierDto.getName());
+        exitstCourier.setSurname(courierDto.getSurname());
         exitstCourier.setLicensePlate(courierDto.getLicensePlate());
         courierEntityService.save(exitstCourier);
         log.info("The courier with license plate {} was updated in the system.", exitstCourier.getLicensePlate());
         return modelMapper.map(exitstCourier,CourierDto.class);
     }
 
-    public CourierDto findByLicensePlate(String licensePlate) {
-        var entity = courierRepository.findFirstByLicensePlateAndIsDeleted(licensePlate, false);
-        return modelMapper.map(entity,CourierDto.class);
+    public Courier findByLicensePlate(String licensePlate) {
+        return courierRepository.findFirstByLicensePlateAndIsDeleted(licensePlate, false);
+    }
+
+    public List<CourierDto> getCouriers() {
+        var responseList = courierRepository.findAllByIsDeleted(false);
+        return responseList.stream().map(item -> modelMapper.map(item, CourierDto.class)).toList();
     }
 }

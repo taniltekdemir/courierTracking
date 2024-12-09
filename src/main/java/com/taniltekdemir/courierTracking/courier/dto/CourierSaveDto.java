@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class CourierSaveDto {
     @NotBlank
-    private String firstName;
+    private String name;
     @NotBlank
-    private String lastName;
+    private String surname;
     @NotBlank
     private  String licensePlate;
 }

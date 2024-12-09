@@ -4,8 +4,7 @@ import lombok.Data;
 @Data
 public class CourierDto {
     private Long id;
-    private String firstName;
-    private String lastName;
-
+    private String name;
+    private String surname;
     private  String licensePlate;
 }
