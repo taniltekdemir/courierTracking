@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,6 +29,6 @@ public class StoreEntry extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "trip_status", length = 30)
     private TripStatus tripStatus;
-    @Column(name = "trip_distance", precision = 20, scale = 2)
+    @Column(name = "trip_distance")
     private Double tripDistance;
 }
