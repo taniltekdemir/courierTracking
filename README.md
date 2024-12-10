@@ -31,7 +31,7 @@ This project is a RESTful web application designed to manage and analyze courier
 ### Steps to Run the Application
 1. **Clone the Repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/taniltekdemir/courierTracking.git
    cd <repository-directory>
    ```
 
@@ -49,8 +49,8 @@ This project is a RESTful web application designed to manage and analyze courier
    ```
 
 4. **Access the Application**
-    - The application will be running on `http://localhost:<port>` (default port is specified in `application.properties`).
-    - PostgreSQL will be configured and initialized automatically. You can monitoring pgAdmin dashboard. Docker-compose file contain it.
+    - The application will be running on `http://localhost:8080` (default port is specified in `application.yml`).
+    - PostgreSQL will be configured and initialized automatically. You can monitor the pgAdmin dashboard on `http://localhost:5050`. Docker-compose file contains it.
 
 5. **Testing with Postman**
     - Import the provided **Postman collection** in the repository to test the API endpoints.
