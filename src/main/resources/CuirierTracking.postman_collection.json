@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "c08e5d51-0fb5-46fb-b9c7-6f33dbc666bc",
+		"name": "CuirierTracking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11840968"
+	},
+	"item": [
+		{
+			"name": "createCourier",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"can\",\r\n    \"surname\": \"elitaş\",\r\n    \"licensePlate\": \"06ZT7889\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stores",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateCourier",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"can\",\r\n    \"surname\": \"Elitaşcı\",\r\n    \"licensePlate\": \"06AA889\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refreshstorejson",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"can\",\r\n    \"surname\": \"Elitaşcı\",\r\n    \"licensePlate\": \"06AA889\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insertLocation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"courier\": \"06ZT7889\",\r\n  \"lat\": 41.0100,\r\n  \"lng\": 28.9799,\r\n  \"time\": \"2024-12-09T15:30:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier/location",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTotalDistanceForCourier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier/total-trip-distance/1?startDate=2024-12-01T00:00:00&endDate=2024-12-09T23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"total-trip-distance",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-12-01T00:00:00"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-09T23:59:59"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert_100_location_together",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/courier/should_insert_100_location_together",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"should_insert_100_location_together"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

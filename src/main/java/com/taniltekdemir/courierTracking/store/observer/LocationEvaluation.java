@@ -52,31 +52,35 @@ public class LocationEvaluation {
     @EventListener
     public void evaluater(CourierLocationDto dto) {
 /**
- *  lokasyon datasını kaydet
+ * Save the location data.
  *
- *  lokasyon bir mağaza girişi ise aktif teslimatı varmı bakılır.
- *  aktif teslimatı varsa kapatılır.
- *  mesafe hesaplanır.
+ * If the location indicates a store entry:
+ *  - Check if there is an active delivery trip.
+ *  - If an active delivery trip exists:
+ *      - Close the active trip.
+ *      - Calculate the distance for this trip.
  *
- *  mağaza girişi fakat aktif teslimatı yoksa acvtive teslimat başlatılır.
+ * If the location indicates a store entry but no active delivery trip exists:
+ *  - Start a new active delivery trip.
  *
- *  son mağaza girişi ve şimdikiede mağaza girişi ise zaman farkına bakılır 1 dk danz azsa mağaza girişi yazılmaz.
- *
+ * If the previous entry is also a store entry:
+ *  - Check the time difference between the two entries.
+ *  - If the time difference is less than 1 minute, do not record the new store entry.
  */
 
         Map<String,String> responseForStoreEnty = IsExistNearStore(dto);
-        if(Boolean.parseBoolean(responseForStoreEnty.get("Result"))){  /**Bu bir mağaza girişi*/
+        if(Boolean.parseBoolean(responseForStoreEnty.get("Result"))){                        /**a store entry*/
             var activeTrip = IsExistActiveTrip(dto);
-            if(Boolean.parseBoolean((String) activeTrip.get("Result"))){  /**Daha önce başlatılmış active bir trip i var.*/
+            if(Boolean.parseBoolean((String) activeTrip.get("Result"))){                     /**an active delivery trip exists.*/
                 StoreEntry activeTripEntry =(StoreEntry) activeTrip.get("lastActiveTrip");
                 if (entryTimeNotEnough(dto.getTimeStamp(),activeTripEntry)) {
                     return;
                 }
                 closeActiveTrip(dto,activeTripEntry.getId());
                 calculateLastTrip(dto,activeTripEntry.getId());
-                createStoreEntry(Long.parseLong(responseForStoreEnty.get("StoreId")), dto); /** Create new trip*/
+                createStoreEntry(Long.parseLong(responseForStoreEnty.get("StoreId")), dto); /** Create new delivery trip*/
             }else {
-                createStoreEntry(Long.parseLong(responseForStoreEnty.get("StoreId")), dto);  /**Create active new trip*/
+                createStoreEntry(Long.parseLong(responseForStoreEnty.get("StoreId")), dto);  /**Create active new delivery trip*/
             }
         }
     }
